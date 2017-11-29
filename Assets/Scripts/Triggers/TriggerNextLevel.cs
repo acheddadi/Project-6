@@ -7,7 +7,7 @@ public class TriggerNextLevel : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerControl player = GetComponent<PlayerControl>();
+        PlayerControl player = collision.GetComponent<PlayerControl>();
         if (player != null) SceneManager.LoadScene(1);
     }
 }
