@@ -7,12 +7,8 @@ public class ScoreControl : MonoBehaviour
 {
     [SerializeField] private PlayerControl _player;
     [SerializeField] private Text _text;
-
-	private void Start()
-	{
-		
-	}
 	
+    // Display score.
 	private void Update()
 	{
         _text.text = _player.GetScore().ToString("D2");

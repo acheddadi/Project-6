@@ -23,8 +23,10 @@ public class InputControl : MonoBehaviour
         }
     }
 
+    // Perform physics operation here to avoid bugs.
     private void LateUpdate()
 	{
+        // Dunk on click, while respecting click delay. Cannot dunk if player is missing.
 		if (Input.GetMouseButtonDown(0) && (Time.time > _timer + clickDelay) && (_playerParent != null))
         {
             PlayerControl player = _playerParent.GetComponentInChildren<PlayerControl>();

@@ -29,7 +29,7 @@ public class TimerControl : MonoBehaviour
 
         else if (_currentTime <= 0)
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene("GameOver");
         }
 	}
 }

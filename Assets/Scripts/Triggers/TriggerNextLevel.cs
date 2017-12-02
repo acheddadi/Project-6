@@ -8,6 +8,10 @@ public class TriggerNextLevel : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         PlayerControl player = collision.GetComponent<PlayerControl>();
-        if (player != null) SceneManager.LoadScene(1);
+        if (player != null)
+        {
+            PlayerPrefs.SetInt("Score", player.GetScore());
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }
