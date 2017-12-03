@@ -6,6 +6,7 @@ public class SpikeControl : MonoBehaviour
 {
     private float _initialX;
     private int _direction;
+    private float _timer = 0.0f;
 
     public bool enableSway = false, reverseDirection = false, randomPosition = false;
     public float swayDistance = 0.5f, swayDelay = 10.0f;
@@ -34,10 +35,11 @@ public class SpikeControl : MonoBehaviour
 
     private void Update()
     {
+        _timer += Time.deltaTime;
         if (reverseDirection) _direction = -1;
         else _direction = 1;
         if (enableSway) transform.position = new Vector3(
-            _initialX + (_direction * Mathf.PingPong(Time.time / swayDelay, swayDistance)),
+            _initialX + (_direction * Mathf.PingPong(_timer / swayDelay, swayDistance)),
             transform.position.y);
     }
 }
