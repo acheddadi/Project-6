@@ -5,13 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class TriggerNextLevel : MonoBehaviour
 {
+    private FadeControl _fade;
+    private bool _nextLevel = false;
+
+    private void Start()
+    {
+        _fade = GetComponent<FadeControl>();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         PlayerControl player = collision.GetComponent<PlayerControl>();
         if (player != null)
         {
             PlayerPrefs.SetInt("Score", player.GetScore());
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            _nextLevel = true;
         }
+    }
+
+    public bool NextLevel()
+    {
+        return _nextLevel;
     }
 }

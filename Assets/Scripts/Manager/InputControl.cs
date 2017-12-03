@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class InputControl : MonoBehaviour
 {
-    [SerializeField] private Transform _playerParent;
     public float clickDelay = 0.1f;
 
+    [SerializeField] private Transform _playerParent;
     private float _timer;
+    private FadeControl _fade;
 
 	private void Start()
 	{
+        _fade = GetComponent<FadeControl>();
         _timer = Time.time;
         //Cursor.visible = false;
     }
@@ -21,6 +23,14 @@ public class InputControl : MonoBehaviour
         {
             Application.Quit();
         }
+        if (_playerParent != null)
+        {
+            PlayerControl player = _playerParent.GetComponentInChildren<PlayerControl>();
+            if (player == null)
+            {
+                StartCoroutine(_fade.RestartLevel());
+            }
+        }
     }
 
     // Perform physics operation here to avoid bugs.
@@ -30,7 +40,10 @@ public class InputControl : MonoBehaviour
 		if (Input.GetMouseButtonDown(0) && (Time.time > _timer + clickDelay) && (_playerParent != null))
         {
             PlayerControl player = _playerParent.GetComponentInChildren<PlayerControl>();
-            if (player.IsActive()) player.Dunk();
+            if (player != null)
+            {
+                if (player.IsActive()) player.Dunk();
+            }
             _timer = Time.time;
         }
 	}

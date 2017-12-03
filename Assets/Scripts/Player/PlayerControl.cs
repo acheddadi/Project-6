@@ -35,10 +35,7 @@ public class PlayerControl : MonoBehaviour
         EnemyTag enemy = collision.GetComponent<EnemyTag>();
         if (enemy != null)
         {
-            transform.position = transform.parent.position;
-            _rb.velocity = new Vector2(0.0f, 0.0f);
-            _direction = 1;
-            _bounce = false;
+            Destroy(gameObject);
         }
     }
 
