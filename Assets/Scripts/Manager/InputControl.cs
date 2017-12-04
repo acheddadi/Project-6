@@ -14,6 +14,7 @@ public class InputControl : MonoBehaviour
 	{
         _fade = GetComponent<FadeControl>();
         _timer = Time.time;
+        _slideTimer = slideDelay;
         //Cursor.visible = false;
     }
 

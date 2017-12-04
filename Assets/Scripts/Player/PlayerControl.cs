@@ -23,8 +23,8 @@ public class PlayerControl : MonoBehaviour
         if (_bounce && !_slide)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, bounceVelocity);
-            _bounce = false;
         }
+        _bounce = false;
     }
 
     // Tile, Enemy and PowerUp collisions go here.
