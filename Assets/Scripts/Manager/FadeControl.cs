@@ -8,18 +8,17 @@ public class FadeControl : MonoBehaviour
     public Texture texture;
     public float fadeDelay = 0.8f;
 
-    private TriggerNextLevel _trigger;
+    [SerializeField] private TriggerNextScene _triggerNextScene;
     private float _alpha = 1.0f;
 
     private void Start()
     {
         StartCoroutine(FadeIn());
-        _trigger = GetComponent<TriggerNextLevel>();
     }
 
     private void Update()
     {
-        if (_trigger.NextLevel())
+        if (_triggerNextScene.NextLevel())
         {
             StartCoroutine(NextLevel());
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RowBoundsTag : MonoBehaviour {
+public class RowsTag : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

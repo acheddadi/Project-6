@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TriggerNextLevel : MonoBehaviour
+public class TriggerNextScene : MonoBehaviour
 {
     private bool _nextLevel = false;
 

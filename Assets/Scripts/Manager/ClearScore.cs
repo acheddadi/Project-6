@@ -6,6 +6,7 @@ public class ClearScore : MonoBehaviour
 {
     private void Awake()
     {
+        PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("Score", 0);
         PlayerPrefs.SetInt("Level", 1);
     }

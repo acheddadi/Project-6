@@ -9,14 +9,14 @@ public class PlayerControl : MonoBehaviour
     private Rigidbody2D _rb;
     private bool _bounce = false, _slide = false, _active = true;
     private int _direction = 1, _starCount, _levelCount;
-    private float _timer;
+    private float _rowTimer, _starTimer;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _starCount = PlayerPrefs.GetInt("Score");
         _levelCount = PlayerPrefs.GetInt("Level");
-        _timer = Time.time;
+        _rowTimer = _starTimer = Time.time;
     }
 
     // Perform all physics operations here to avoid bugs.
@@ -34,7 +34,14 @@ public class PlayerControl : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         StarControl star = collision.GetComponent<StarControl>();
-        if (star != null) _starCount++;
+        if (star != null)
+        {
+            if (Time.time > _starTimer + 0.5f)
+            {
+                _starCount++;
+                _starTimer = Time.time;
+            }
+        }
         EnemyTag enemy = collision.GetComponent<EnemyTag>();
         if (enemy != null)
         {
@@ -54,13 +61,13 @@ public class PlayerControl : MonoBehaviour
     // Level count.
     private void OnTriggerExit2D(Collider2D collision)
     {
-        RowBoundsTag row = collision.GetComponent<RowBoundsTag>();
+        RowsTag row = collision.GetComponent<RowsTag>();
         if (row != null)
         {
-            if (Time.time > _timer + 0.5f)
+            if (Time.time > _rowTimer + 0.5f)
             {
                 _levelCount++;
-                _timer = Time.time;
+                _rowTimer = Time.time;
             }
         }
     }
