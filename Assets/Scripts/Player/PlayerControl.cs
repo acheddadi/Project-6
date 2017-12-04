@@ -7,7 +7,7 @@ public class PlayerControl : MonoBehaviour
     public float speed = 3.0f, bounceVelocity = 5.0f, dunkVelocity = 10.0f;
 
     private Rigidbody2D _rb;
-    private bool _bounce = false, _active = true;
+    private bool _bounce = false, _slide = false, _active = true;
     private int _direction = 1, _starCount;
 
     private void Start()
@@ -20,14 +20,14 @@ public class PlayerControl : MonoBehaviour
     private void LateUpdate()
     {
         _rb.velocity = new Vector2(speed * _direction, _rb.velocity.y);
-        if (_bounce)
+        if (_bounce && !_slide)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, bounceVelocity);
             _bounce = false;
         }
     }
 
-    // Enemy and PowerUp collisions go here.
+    // Tile, Enemy and PowerUp collisions go here.
     private void OnTriggerEnter2D(Collider2D collision)
     {
         StarControl star = collision.GetComponent<StarControl>();
@@ -37,6 +37,8 @@ public class PlayerControl : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        TileControl tc = collision.transform.gameObject.GetComponent<TileControl>();
+        if (tc != null) tc.Damage();
     }
 
     // Tile bounce goes here.
@@ -46,11 +48,9 @@ public class PlayerControl : MonoBehaviour
         if (tc != null) _bounce = true;
     }
 
-    // Tile collisions go here.
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void Slide(bool slide)
     {
-        TileControl tc = collision.transform.gameObject.GetComponent<TileControl>();
-        if (tc != null) tc.Damage();
+        _slide = slide;
     }
 
     // Input sends playing downwards.

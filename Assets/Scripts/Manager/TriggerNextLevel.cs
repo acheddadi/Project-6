@@ -5,13 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class TriggerNextLevel : MonoBehaviour
 {
-    private FadeControl _fade;
     private bool _nextLevel = false;
-
-    private void Start()
-    {
-        _fade = GetComponent<FadeControl>();
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -23,12 +23,26 @@ public class InputControl : MonoBehaviour
         {
             Application.Quit();
         }
+
         if (_playerParent != null)
         {
             PlayerControl player = _playerParent.GetComponentInChildren<PlayerControl>();
             if (player == null)
             {
                 StartCoroutine(_fade.RestartLevel());
+            }
+        }
+
+        if (_playerParent != null)
+        {
+            PlayerControl player = _playerParent.GetComponentInChildren<PlayerControl>();
+            if (player != null)
+            {
+                if (player.IsActive())
+                {
+                    if (Input.GetMouseButton(0)) player.Slide(true);
+                    else player.Slide(false);
+                }
             }
         }
     }
