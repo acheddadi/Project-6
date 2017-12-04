@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class InputControl : MonoBehaviour
 {
-    public float clickDelay = 0.1f;
+    public float clickDelay = 0.1f, slideDelay = 0.5f;
 
     [SerializeField] private Transform _playerParent;
-    private float _timer;
+    private float _timer, _slideTimer;
     private FadeControl _fade;
 
 	private void Start()
@@ -40,7 +40,15 @@ public class InputControl : MonoBehaviour
             {
                 if (player.IsActive())
                 {
-                    if (Input.GetMouseButton(0)) player.Slide(true);
+                    if (Input.GetMouseButton(0))
+                    {
+                        _slideTimer += Time.deltaTime;
+                        if (_slideTimer > slideDelay)
+                        {
+                            player.Slide(true);
+                            _slideTimer = 0.0f;
+                        }
+                    }
                     else player.Slide(false);
                 }
             }
