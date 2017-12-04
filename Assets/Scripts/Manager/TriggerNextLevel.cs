@@ -13,6 +13,7 @@ public class TriggerNextLevel : MonoBehaviour
         if (player != null)
         {
             PlayerPrefs.SetInt("Score", player.GetScore());
+            PlayerPrefs.SetInt("Level", player.GetLevel());
             _nextLevel = true;
         }
     }

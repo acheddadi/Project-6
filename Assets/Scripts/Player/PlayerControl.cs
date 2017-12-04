@@ -8,12 +8,15 @@ public class PlayerControl : MonoBehaviour
 
     private Rigidbody2D _rb;
     private bool _bounce = false, _slide = false, _active = true;
-    private int _direction = 1, _starCount;
+    private int _direction = 1, _starCount, _levelCount;
+    private float _timer;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _starCount = PlayerPrefs.GetInt("Score");
+        _levelCount = PlayerPrefs.GetInt("Level");
+        _timer = Time.time;
     }
 
     // Perform all physics operations here to avoid bugs.
@@ -46,6 +49,20 @@ public class PlayerControl : MonoBehaviour
     {
         TileControl tc = collision.GetComponent<TileControl>();
         if (tc != null) _bounce = true;
+    }
+
+    // Level count.
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        RowBoundsTag row = collision.GetComponent<RowBoundsTag>();
+        if (row != null)
+        {
+            if (Time.time > _timer + 0.5f)
+            {
+                _levelCount++;
+                _timer = Time.time;
+            }
+        }
     }
 
     public void Slide(bool slide)
@@ -82,5 +99,11 @@ public class PlayerControl : MonoBehaviour
     public int GetScore()
     {
         return _starCount;
+    }
+
+    // Returns current score.
+    public int GetLevel()
+    {
+        return _levelCount;
     }
 }
