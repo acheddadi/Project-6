@@ -11,7 +11,11 @@ public class ScoreControl : MonoBehaviour
     // Display score.
 	private void Update()
 	{
-        _score.text = _player.GetScore().ToString("D2");
-        _level.text = _player.GetLevel().ToString("D2");
+        if (_score == null || _level == null) Debug.LogError("ScoreControl : You forgot to assign a text object.");
+        else
+        {
+            _score.text = _player.GetScore().ToString("D2");
+            _level.text = _player.GetLevel().ToString("D2");
+        }
 	}
 }
