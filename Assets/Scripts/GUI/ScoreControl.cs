@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class ScoreControl : MonoBehaviour
 {
     [SerializeField] private PlayerControl _player;
-    [SerializeField] private Text _score, _level;
+    [SerializeField] private Text _score;
+    [SerializeField] private Text _level;
 	
     // Display score.
 	private void Update()
