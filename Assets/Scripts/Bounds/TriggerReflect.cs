@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class TriggerReflect : MonoBehaviour
 {
-    private float _timer;
+    private float _timer = 0;
 
     public float reflectDelay = 0.5f;
-
-    private void Start()
-    {
-        _timer = Time.time;
-    }
 
     // Change direction when bounds are touched
     private void OnTriggerEnter2D(Collider2D collision)
