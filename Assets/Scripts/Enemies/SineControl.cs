@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class SineControl : MonoBehaviour
 {
+    private CircleCollider2D _collider;
     private float _initialX, _initialY, _oldX;
     private int _direction;
     private float _timer = 0.0f, _sineTimer = 0.0f, _initialScaleX, _spriteOrientation;
 
-    public bool reverseDirection = false;
+    public bool cosine = false, reverseDirection = false;
     public float spriteFlipDelay = 2.0f, travelDistance = 1.0f, travelDelay = 1.0f, swayDistance = 0.5f, swayDelay = 2.0f;
 
 
@@ -42,9 +43,19 @@ public class SineControl : MonoBehaviour
         transform.position = new Vector3(
             _initialX + (_direction * Mathf.PingPong(_timer / travelDelay, travelDistance)),
             transform.position.y);
-        transform.position = new Vector3(
+
+        if (cosine)
+        {
+            transform.position = new Vector3(
+            transform.position.x,
+            _initialY + swayDistance * Mathf.Cos(_sineTimer * swayDelay));
+        }
+        else
+        {
+            transform.position = new Vector3(
             transform.position.x,
             _initialY + swayDistance * Mathf.Sin(_sineTimer * swayDelay));
+        }
 
         if (_oldX < transform.position.x)
         {
