@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SineControl : MonoBehaviour
+public class LemniscateControl : MonoBehaviour
 {
-    private CircleCollider2D _collider;
-    private float _initialX, _initialY, _oldX;
+    private float _initialX, _initialY, _initialScaleX, _oldX, _timer = 0.0f, _spriteOrientation;
     private int _direction;
-    private float _timer = 0.0f, _sineTimer = 0.0f, _initialScaleX, _spriteOrientation;
 
-    public bool cosine = false, reverseDirection = false;
-    public float spriteFlipDelay = 2.0f, travelDistance = 1.0f, travelDelay = 1.0f, swayDistance = 0.5f, swayDelay = 2.0f;
-
+    public bool reverseDirection = false;
+    public enum Direction { Horizontal, Vertical };
+    public Direction swayDirection = Direction.Horizontal;
+    public float speed = 1.0f, size = 1.0f, spriteFlipDelay = 2.0f;
 
     private void Start()
     {
@@ -40,31 +39,30 @@ public class SineControl : MonoBehaviour
         transform.localScale = new Vector3(_initialScaleX * _spriteOrientation,
             transform.localScale.y, transform.localScale.z);
 
-        transform.position = new Vector3(
-            _initialX + (_direction * Mathf.PingPong(_timer / travelDelay, travelDistance)),
-            transform.position.y);
-
-        if (cosine)
+        if (swayDirection == Direction.Horizontal)
         {
             transform.position = new Vector3(
-            transform.position.x,
-            _initialY + swayDistance * Mathf.Cos(_sineTimer * swayDelay));
+            _initialX + _direction * (size * Mathf.Sqrt(2) * Mathf.Cos(_timer * speed)) /
+            (Mathf.Pow(Mathf.Sin(_timer * speed), 2) + 1),
+            _initialY + _direction * (size * Mathf.Sqrt(2) * Mathf.Cos(_timer * speed) * Mathf.Sin(_timer * speed)) /
+            (Mathf.Pow(Mathf.Sin(_timer * speed), 2) + 1));
         }
+
         else
         {
             transform.position = new Vector3(
-            transform.position.x,
-            _initialY + swayDistance * Mathf.Sin(_sineTimer * swayDelay));
+            _initialX + _direction * (size * Mathf.Sqrt(2) * Mathf.Cos(_timer * speed) * Mathf.Sin(_timer * speed)) /
+            (Mathf.Pow(Mathf.Sin(_timer * speed), 2) + 1),
+            _initialY + _direction * (size * Mathf.Sqrt(2) * Mathf.Cos(_timer * speed)) /
+            (Mathf.Pow(Mathf.Sin(_timer * speed), 2) + 1));
         }
 
         if (_oldX < transform.position.x)
         {
-            _sineTimer += Time.deltaTime;
             if (_spriteOrientation < 1) _spriteOrientation += Time.deltaTime * spriteFlipDelay;
         }
         else
         {
-            _sineTimer -= Time.deltaTime;
             if (_spriteOrientation > -1) _spriteOrientation -= Time.deltaTime * spriteFlipDelay;
         }
         _oldX = transform.position.x;
